@@ -25,6 +25,10 @@
     BOOL _scrollAnimationCheck;
 }
 
+- (NSArray *) getItems {
+  return _items;
+}
+
 - (id)initWithInfiniteTabBarItems:(NSArray *)items
 {
     self = [super initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width, 60)];

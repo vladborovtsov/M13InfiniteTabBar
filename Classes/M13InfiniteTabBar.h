@@ -86,4 +86,8 @@
  */
 @property (nonatomic, assign) BOOL enableInfiniteScrolling;
 
+
+//Dirty hack to be able to obtain items to be able to select them programatically.
+- (NSArray *) getItems;
+
 @end
