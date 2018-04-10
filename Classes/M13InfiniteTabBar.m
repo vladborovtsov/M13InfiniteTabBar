@@ -484,7 +484,15 @@
     }
 }
 
-- (void)selectItem:(M13InfiniteTabBarItem *)item
+- (void)selectItem:(M13InfiniteTabBarItem *)item {
+  [self selectItem:item animated:YES];
+}
+
+- (void)selectItemWithoutAnimation:(M13InfiniteTabBarItem *)item {
+  [self selectItem:item animated:NO];
+}
+
+- (void)selectItem:(M13InfiniteTabBarItem *)item animated:(BOOL) animated
 {
     BOOL shouldUpdate = YES;
     if ([_tabBarDelegate respondsToSelector:@selector(infiniteTabBar:shouldSelectItem:)]) {
@@ -496,10 +504,12 @@
         if ([_tabBarDelegate respondsToSelector:@selector(infiniteTabBar:willAnimateInViewControllerForItem:)]) {
             [_tabBarDelegate infiniteTabBar:self willAnimateInViewControllerForItem:item];
         }
-        
+      
+      if (animated) {
         [UIView beginAnimations:@"TabChangedAnimation" context:nil];
         [UIView setAnimationDuration:.5];
         [UIView setAnimationDelegate:self];
+      }
         
         //Swap Nav controllers
         if ([_tabBarDelegate respondsToSelector:@selector(infiniteTabBar:animateInViewControllerForItem:)]) {
@@ -525,10 +535,12 @@
         
         _previousSelectedIndex = item.tag;
         _selectedItem = item;
-        
+      
+      if (animated) {
         [UIView setAnimationDidStopSelector:@selector(didSelectItem)];
         
         [UIView commitAnimations];
+      }
     } else {
         if (_items.count >= _minimumNumberOfTabsForScrolling) {
             //Scroll Back to nearest tab with previous index
@@ -564,6 +576,10 @@
     if ([_tabBarDelegate respondsToSelector:@selector(infiniteTabBar:didSelectItem:)]) {
         [_tabBarDelegate infiniteTabBar:self didSelectItem:_selectedItem];
     }
+}
+
+- (UIView *) tabContainerView {
+  return _tabContainerView;
 }
 
 @end

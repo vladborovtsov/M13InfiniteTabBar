@@ -90,4 +90,8 @@
 //Dirty hack to be able to obtain items to be able to select them programatically.
 - (NSArray *) getItems;
 
+- (void)selectItem:(M13InfiniteTabBarItem *)item;
+- (void)selectItemWithoutAnimation:(M13InfiniteTabBarItem *)item;
+- (UIView *) tabContainerView;
+
 @end
